@@ -96,6 +96,28 @@ def zip_it(zip_name : str = 'config.zip', listfile : str = '', ipsetfile : str =
     print(f'ℹ️ Drop zip({zip_name}) into zapret dir and use "unzip {zip_name}"')
 
 
+def clear_files(list_final, ipset_final, stratage_final):
+    try:
+        if os.path.exists(list_final):
+            os.remove(list_final)
+            print('✅ Success : Cleared ' + list_final)
+
+        if os.path.exists(ipset_final):
+            os.remove(ipset_final)
+            print('✅ Success : Cleared ' + ipset_final)
+
+        if os.path.exists(stratage_final):
+            os.remove(stratage_final)
+            print('✅ Success : Cleared ' + stratage_final)
+        
+    except Exception as e:
+        print('❌ Error : Clear files : ' + e)
+    else:
+        print('✅ Success : Clear files')
+
+
 list_final, ipset_final, stratage_final = generate_stratege()
 
 zip_it(listfile=list_final, ipsetfile=ipset_final, confgig=stratage_final)
+
+clear_files(list_final, ipset_final, stratage_final)
