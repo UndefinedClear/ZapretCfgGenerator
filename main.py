@@ -1,4 +1,5 @@
 import os
+from zipfile import PyZipFile, ZipFile
 
 base = '''
 @echo off
@@ -84,5 +85,17 @@ def generate_stratege(stratage: str = 'general_stratege.bat'):
     print('✅ Success : Compile Stratege')
     print(f'ℹ️ INFO : Put config and lists in zapret dir:\n-- List_name: {list_}\n-- IPSet_name: {ipset_}\n-- Config_Name: {stratage}')
 
+    return [list_, ipset_, stratage]
 
-generate_stratege()
+def zip_it(zip_name : str = 'config.zip', listfile : str = '', ipsetfile : str = '', confgig : str = ''):
+    with ZipFile(zip_name, 'w') as myzip:
+        myzip.write(listfile)
+        myzip.write(ipsetfile)
+        myzip.write(confgig)
+
+    print(f'ℹ️ Drop zip({zip_name}) into zapret dir and use "unzip {zip_name}"')
+
+
+list_final, ipset_final, stratage_final = generate_stratege()
+
+zip_it(listfile=list_final, ipsetfile=ipset_final, confgig=stratage_final)
