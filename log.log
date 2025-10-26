@@ -1,0 +1,12 @@
+✅ Success : Generate Mega Ublocks
+✅ Success : Compile Stratege
+✅ Success : Compile Stratege
+ℹ️ INFO : Put config and lists in zapret dir:
+-- List_name: mega_list.txt
+-- IPSet_name: mega_ipset.txt
+-- Config_Name: general_stratege.bat
+ℹ️ Drop zip(config.zip) into zapret dir and use "unzip config.zip"
+✅ Success : Cleared mega_list.txt
+✅ Success : Cleared mega_ipset.txt
+✅ Success : Cleared general_stratege.bat
+✅ Success : Clear files
