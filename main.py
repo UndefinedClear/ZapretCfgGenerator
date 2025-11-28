@@ -1,29 +1,9 @@
 import os
 from zipfile import PyZipFile, ZipFile
+from bases import Bases, os_type
 
-base = '''
-@echo off
-chcp 65001 > nul
-:: 65001 - UTF-8
-
-cd /d "%~dp0"
-call service_status.bat zapret
-call check_updates.bat soft
-echo:
-
-set BIN=%~dp0bin\
-
-
-start "zapret: general" /min "%BIN%winws.exe" --wf-tcp=80,443 --wf-udp=443,50000-50100 ^
---filter-udp=443 --hostlist="hostlist_file" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^
---filter-udp=50000-50100 --ipset="ipset_file" --dpi-desync=fake --dpi-desync-any-protocol --dpi-desync-cutoff=d3 --dpi-desync-repeats=6 --new ^
---filter-tcp=80 --hostlist="hostlist_file" --dpi-desync=fake,split2 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --new ^
---filter-tcp=443 --hostlist="hostlist_file" --dpi-desync=split2 --dpi-desync-split-seqovl=652 --dpi-desync-split-pos=2 --dpi-desync-split-seqovl-pattern="%BIN%tls_clienthello_www_google_com.bin"
-'''
-
-
-# base.replace('hostlist_file', '')
-# base.replace('ipset_file', '')
+windows_bases = Bases('Windows')
+linux_bases = Bases('Linux')
 
 
 def generate_mega_unblocks():
@@ -62,30 +42,28 @@ def stratege_compiler(list_name, ipset_name):
     with open(ipset_name, 'w') as f:
         f.write(mega_ipset)
 
-
     print('✅ Success : Compile Stratege')
 
     return [list_name, ipset_name]
 
-def generate_stratege(stratage: str = 'general_stratege.bat'):
+def generate_stratege(base_content, out_file: str = 'general_stratege_hyper.bat'):
     list_ = 'mega_list.txt'
     ipset_ = 'mega_ipset.txt'
 
     stratege_compiler(list_, ipset_)
 
-    content = base
+    content = base_content
 
     content = content.replace('hostlist_file', list_)
     content = content.replace('ipset_file', ipset_)
-
-    with open(stratage, 'w') as f:
+        
+    with open(out_file, 'w') as f:
         f.write(content)
 
-
     print('✅ Success : Compile Stratege')
-    print(f'ℹ️ INFO : Put config and lists in zapret dir:\n-- List_name: {list_}\n-- IPSet_name: {ipset_}\n-- Config_Name: {stratage}')
+    print(f'ℹ️ INFO : Put config and lists in zapret dir:\n-- List_name: {list_}\n-- IPSet_name: {ipset_}\n-- Config_Name: {out_file}')
 
-    return [list_, ipset_, stratage]
+    return [list_, ipset_, out_file]
 
 def zip_it(zip_name : str = 'config.zip', listfile : str = '', ipsetfile : str = '', confgig : str = ''):
     with ZipFile(zip_name, 'w') as myzip:
@@ -111,12 +89,51 @@ def clear_files(list_final, ipset_final, stratage_final):
             print('✅ Success : Cleared ' + stratage_final)
         
     except Exception as e:
-        print('❌ Error : Clear files : ' + e)
+        print('❌ Error : Clear files : ' + str(e))
     else:
         print('✅ Success : Clear files')
 
 
-list_final, ipset_final, stratage_final = generate_stratege()
+
+
+
+list_final, ipset_final, stratage_final = '', '', ''
+
+os_name = input('Enter os \n(1) Windows\n(2) Linux\n> ')
+
+if os_name == '1':
+    print('\n\n' + '='*10 + 'Configs' + '='*10)
+
+    for path in os.listdir('windows_bases'):
+        print(path + '\n')
+
+    alt = input('Enter alt name (just copy): ')
+
+    alt_base = windows_bases.get_base_content(alt)
+
+    # Use the alt filename (without extension) for the output file
+    alt_name = os.path.splitext(alt)[0]  # Remove file extension
+    list_final, ipset_final, stratage_final = generate_stratege(
+        base_content=alt_base, 
+        out_file=f'hyper_stratege_{alt_name}.bat'
+    )
+
+elif os_name == '2':
+    print('\n\n' + '='*10 + 'Configs' + '='*10)
+
+    for path in os.listdir('linux_bases'):
+        print(path + '\n')
+
+    alt = input('Enter alt name (just copy): ')
+
+    alt_base = linux_bases.get_base_content(alt)
+
+    # Use the alt filename (without extension) for the output file
+    alt_name = os.path.splitext(alt)[0]  # Remove file extension
+    list_final, ipset_final, stratage_final = generate_stratege(
+        base_content=alt_base, 
+        out_file=f'general_hyper_stratege_{alt_name}.bat'  # general in the begining for detecting on linux
+    )
 
 zip_it(listfile=list_final, ipsetfile=ipset_final, confgig=stratage_final)
 

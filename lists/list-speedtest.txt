@@ -15,3 +15,4 @@ speedtestcustom.com
 speedtestlab.net
 webtest.net
 www.speedtest.net.cdn.cloudflare.net
+cdn.ziffstatic.com
