@@ -95,46 +95,48 @@ def clear_files(list_final, ipset_final, stratage_final):
 
 
 
+def main():
+    list_final, ipset_final, stratage_final = '', '', ''
+
+    os_name = input('Enter os \n(1) Windows\n(2) Linux\n> ')
+
+    if os_name == '1':
+        print('\n\n' + '='*10 + 'Configs' + '='*10)
+
+        for path in os.listdir('windows_bases'):
+            print(path + '\n')
+
+        alt = input('Enter alt name (just copy): ')
+
+        alt_base = windows_bases.get_base_content(alt)
+
+        # Use the alt filename (without extension) for the output file
+        alt_name = os.path.splitext(alt)[0]  # Remove file extension
+        list_final, ipset_final, stratage_final = generate_stratege(
+            base_content=alt_base, 
+            out_file=f'hyper_stratege_{alt_name}.bat'
+        )
+
+    elif os_name == '2':
+        print('\n\n' + '='*10 + 'Configs' + '='*10)
+
+        for path in os.listdir('linux_bases'):
+            print(path + '\n')
+
+        alt = input('Enter alt name (just copy): ')
+
+        alt_base = linux_bases.get_base_content(alt)
+
+        # Use the alt filename (without extension) for the output file
+        alt_name = os.path.splitext(alt)[0]  # Remove file extension
+        list_final, ipset_final, stratage_final = generate_stratege(
+            base_content=alt_base, 
+            out_file=f'general_hyper_stratege_{alt_name}.bat'  # general in the begining for detecting on linux
+        )
+
+    zip_it(listfile=list_final, ipsetfile=ipset_final, confgig=stratage_final)
+
+    clear_files(list_final, ipset_final, stratage_final)
 
 
-list_final, ipset_final, stratage_final = '', '', ''
-
-os_name = input('Enter os \n(1) Windows\n(2) Linux\n> ')
-
-if os_name == '1':
-    print('\n\n' + '='*10 + 'Configs' + '='*10)
-
-    for path in os.listdir('windows_bases'):
-        print(path + '\n')
-
-    alt = input('Enter alt name (just copy): ')
-
-    alt_base = windows_bases.get_base_content(alt)
-
-    # Use the alt filename (without extension) for the output file
-    alt_name = os.path.splitext(alt)[0]  # Remove file extension
-    list_final, ipset_final, stratage_final = generate_stratege(
-        base_content=alt_base, 
-        out_file=f'hyper_stratege_{alt_name}.bat'
-    )
-
-elif os_name == '2':
-    print('\n\n' + '='*10 + 'Configs' + '='*10)
-
-    for path in os.listdir('linux_bases'):
-        print(path + '\n')
-
-    alt = input('Enter alt name (just copy): ')
-
-    alt_base = linux_bases.get_base_content(alt)
-
-    # Use the alt filename (without extension) for the output file
-    alt_name = os.path.splitext(alt)[0]  # Remove file extension
-    list_final, ipset_final, stratage_final = generate_stratege(
-        base_content=alt_base, 
-        out_file=f'general_hyper_stratege_{alt_name}.bat'  # general in the begining for detecting on linux
-    )
-
-zip_it(listfile=list_final, ipsetfile=ipset_final, confgig=stratage_final)
-
-clear_files(list_final, ipset_final, stratage_final)
+main()

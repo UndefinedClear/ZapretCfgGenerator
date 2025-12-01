@@ -16,10 +16,3 @@ class Bases:
 
         with open(base_dir + base_name, 'r') as f:
             return f.read()
-
-# Usage examples:
-# windows_bases = Bases('Windows')
-# print(windows_bases.get_path('alt_8_base'))  # C:\Program Files\YourApp\Data
-
-# linux_bases = Bases('Linux')
-# print(linux_bases.get_path('alt_8_base'))  # /opt/yourapp/data
