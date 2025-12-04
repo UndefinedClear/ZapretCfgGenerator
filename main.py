@@ -73,7 +73,7 @@ def zip_it(zip_name : str = 'config.zip', listfile : str = '', ipsetfile : str =
 
     print(f'ℹ️ Drop zip({zip_name}) into zapret dir and use "unzip {zip_name}"')
 
-
+1
 def clear_files(list_final, ipset_final, stratage_final):
     try:
         if os.path.exists(list_final):
