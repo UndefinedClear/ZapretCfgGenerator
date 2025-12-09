@@ -65,15 +65,16 @@ def generate_stratege(base_content, out_file: str = 'general_stratege_hyper.bat'
 
     return [list_, ipset_, out_file]
 
-def zip_it(zip_name : str = 'config.zip', listfile : str = '', ipsetfile : str = '', confgig : str = ''):
+def zip_it(zip_name : str = 'config.zip', listfile : str = '', ipsetfile : str = '', config : str = '', exclude: str = ''):
     with ZipFile(zip_name, 'w') as myzip:
         myzip.write(listfile)
         myzip.write(ipsetfile)
-        myzip.write(confgig)
+        myzip.write(config)
+        myzip.write(exclude)
 
     print(f'ℹ️ Drop zip({zip_name}) into zapret dir and use "unzip {zip_name}"')
 
-1
+
 def clear_files(list_final, ipset_final, stratage_final):
     try:
         if os.path.exists(list_final):
@@ -97,6 +98,8 @@ def clear_files(list_final, ipset_final, stratage_final):
 
 def main():
     list_final, ipset_final, stratage_final = '', '', ''
+
+    print('''Roblox works only on 1.9.0b of Zapret\n''')
 
     os_name = input('Enter os \n(1) Windows\n(2) Linux\n> ')
 
@@ -134,7 +137,7 @@ def main():
             out_file=f'general_hyper_stratege_{alt_name}.bat'  # general in the begining for detecting on linux
         )
 
-    zip_it(listfile=list_final, ipsetfile=ipset_final, confgig=stratage_final)
+    zip_it(listfile=list_final, ipsetfile=ipset_final, config=stratage_final, exclude= 'list-exclude.txt')
 
     clear_files(list_final, ipset_final, stratage_final)
 
