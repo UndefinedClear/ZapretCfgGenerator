@@ -26,6 +26,9 @@ akamaitechnologies.com
 yandex.ru
 
 school.mos.ru
+dnevnik.mos.ru
+login.mos.ru
+uchebnik.mos.ru
 
 marketplace.visualstudio.com
 login.microsoftonline.com
@@ -39,3 +42,4 @@ camo.githubusercontent.com
 raw.githubusercontent.com
 
 jupyterlab-lsp.readthedocs.io
+api.telegram.org
