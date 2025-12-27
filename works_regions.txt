@@ -1,0 +1,2 @@
+konakovo -> alt3_1.9.1.bat
+moscow -> alt8_new 1.9.1.bat | alt8_new 1.9.0b.bat

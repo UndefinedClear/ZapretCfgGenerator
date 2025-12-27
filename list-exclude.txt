@@ -37,9 +37,21 @@ ms-vscode.vscode-node-azure-pack
 rocketseat.gallery.vsassets.io
 app.vssps.visualstudio.com
 
+login.live.com
+
 github.com
 camo.githubusercontent.com
 raw.githubusercontent.com
 
 jupyterlab-lsp.readthedocs.io
 api.telegram.org
+
+teletype.in
+
+s.myangular.life
+stats.myangular.life
+filmworld01.buzz
+w5.filmworld01.buzz
+
+
+gist.github.com
